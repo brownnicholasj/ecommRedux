@@ -4,20 +4,20 @@
 
 ## Description
 
-Link to App: https://brownnicholasj-booksearch.herokuapp.com/
+Link to App: https://brownnicholasj-redux-ecomm.herokuapp.com/
 
-- This Book Search App was refactored from a RESTful API to a GraphQL backend.
-  It will allow a user to signup and login, then search for books with a search
-  bar. When logged in, a user can save a book and store them, when viewing the
-  stored books, they can remove them from storage.
+- This Shop-Shop e-commerce site was refactored from using the context api to
+  using redux library to handle the more complex state management.
 - The technology used for this application are: node, javascript, express (npm),
   apollo-server-express (npm), mongoose (npm), graphql (npm), bcrypt (npm),
-  dotenv (npm), jsonwebtoken (npm), jwt-decode (npm), reactjs, bootstrap,
-  MongoDB, Heroku
-- The biggest challenge with this project working through the context
-  authentication. I had to troubleshoot from error messages that lead me down a
-  couple of different paths. Appeared to be missing a dependency, then after
-  finding the dependency - had to refactor back through error messages.
+  dotenv (npm), jsonwebtoken (npm), jwt-decode (npm), redux (npm), stripe (npm),
+  reactjs, MongoDB, Heroku
+- The biggest challenge here was understanding the redux library from scratch
+  and once getting the basics, building it into an environment that had a
+  workable code base. Once I found the basics of createStore and implementing it
+  into the App.js, I allowed the error messages along with the redux
+  documentation and explanations found online to work through the issues to get
+  to completion.
 
 ## Table of Contents
 
@@ -29,18 +29,19 @@ Link to App: https://brownnicholasj-booksearch.herokuapp.com/
 
 ## Usage
 
-A user will go to the page at https://brownnicholasj-booksearch.herokuapp.com/
-and see the landing page with the option to search for books or login/signup
-![usage001](./screenshots/usage001.jpg)
+A user will go to the page at https://brownnicholasj-redux-ecomm.herokuapp.com/
+and see the landing page with the option to view categories and products and
+login/signup ![usage001](./screenshots/usage001.jpg)
 
-If the user chooses Login/Sign Up a modal will be available for the user to
-create/put in their credentials ![usage002](./screenshots/usage002.jpg)
+If the user chooses Login/Sign Up they will be directed to the respective page
+![usage002](./screenshots/usage002.jpg)
 
-The user can search for a book, if logged in, they have the option to Save this
-Book! ![usage003](./screenshots/usage003.jpg)
+The user can add products to their cart, if the user is NOT signed in, they will
+not be allowed to checkout ![usage003](./screenshots/usage003.jpg)
 
-The user can select a link called 'See Your Books' and they can view all saved
-books for their logged in user ![usage004](./screenshots/usage004.jpg)
+When the logged in user wants to checkout, they will be directed to stripe.com
+(Test license) to submit their transaction through their services
+![usage004](./screenshots/usage004.jpg)
 
 ## License
 
@@ -55,29 +56,27 @@ A thanks to the following contributors to this project:
 
 ### Behind the Code
 
-As the front end of the code was 'provided' by Trilogy Education Services, this
-review will be focused on the back end code that was refactored to use GraphQL
-and ApolloServer.
+As the back end of the code was 'provided' by Trilogy Education Services, this
+review will be focused on the front end code that was refactored to use Redux.
 
-- The schemas were pretty simple to setup as they followed the already setup
-  Models. The unique things I had to figure out is utilizing an input type and
-  integrating that into the mutation ![btc001](./screenshots/btc001.jpg)
+- Redux requires a store to be created, accomplished this by creating a store.js
+  within the utils folder ![btc001](./screenshots/btc001.jpg)
 
-- The resolvers had to be setup to accept the queries and mutations. The most
-  unique resolver was the saveBook resolver, which had to take in the context,
-  of which had to save the user info into. Then checked for authentication and
-  ultimately added to the users saved books. ![btc002](./screenshots/btc002.jpg)
+- To link the reducers to the createStore, refactored the reducers.js to export
+  the reducers ![btc002](./screenshots/btc002.jpg)
 
-- The client side pages had to be slightly adjusted to point towards the new
-  graphql backend schema, this was done in the SearchBook.js, SavedBook.js,
-  LoginForm.js, and SignupForm.js ![btc003](./screenshots/btc003.jpg)
+- Since we refactored to utilize redux createStore, we completely removed the
+  GlobalState.js. The only thing we needed from it was the initialState, which
+  we brought over and housed in the reducers.js
+  ![btc003](./screenshots/btc003.jpg)
 
-- The queries.js and mutations.js are updated to store the graphql language to
-  execute the query from the client side.
+- We initiated the new method of storing the state in the App.js by importing
+  the store.js and Provider from react-redux, we then serve the Producer and the
+  store in the return ![btc004](./screenshots/btc004.jpg)
 
-- Dependencies were updated in multiple areas to accept the required back end
-  features, such as: setContext, ApolloClient, gql, useQuery, and useMutation...
-  among others. ![btc004](./screenshots/btc004.jpg)
+- We then had to utilize the redux useSelector and useDispatch methods where we
+  passed the state. This followed a relatively simple pattern that we
+  implemented on all required components. ![btc005](./screenshots/btc005.jpg)
 
 ## Questions
 
